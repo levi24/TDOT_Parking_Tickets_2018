@@ -44,11 +44,14 @@ clean_neighbourhood_profiles <-
          characteristic, 
          city_of_toronto)
 
-#head(clean_neighbourhood_profiles)
+##Attempt at doing a pie chart
 
-#knitr::kable(all_green_p_parking[["carparks"]][["capacity"]])
-  
-# Save Data 
-#write(all_green_p_parking, "inputs/raw_data.json")
+#organize_neighbourhood <-
+#ggplot(clean_neighbourhood_profiles, aes(x="", y = characteristic, fill = characteristic)) +
+#geom_bar(width = 1, stat = "identity")
+#organize_neighbourhood
+#neighbourhood_pie <- organize_neighbourhood + coord_polar("y")
+#neighbourhood_pie
+
 
 

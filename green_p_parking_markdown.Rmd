@@ -1,5 +1,5 @@
 ---
-title: "Breakdown of Population Based on Age in Toronto"
+title: "Breakdown of Population Based on Age Groups in Toronto"
 author: "Rachit Srivastava"
 date: "January 29th, 2021"
 output: pdf_document
@@ -11,41 +11,36 @@ output: pdf_document
 #install.packages("dplyr")
 #install.packages("janitor")
 #install.packages("ggplot2")
-library(opendatatoronto)
-library(tidyverse)
-library(dplyr)
-library(janitor)
-library(ggplot2)
 
+library(opendatatoronto) #Install opendatatoronto in order to retrieve desired dataset.
+library(tidyverse) #Installed tidyverse to help with certain R syntax.
+library(dplyr) #Installed dplyr as there was an error that presented that told me to install it. The code worked fine after I did.
+library(janitor) #Installed janitor to help clean the data.
+library(ggplot2) #Installed ggplot2 in order to graph the data.
+
+#Created a variable called "all_neighbourhood_profiles and assigned the full dataset to it. This function also helps visualize the data in a table format in order to see which data is applicable for the story.
 all_neighbourhood_profiles <-
-  opendatatoronto::search_packages("Neighbourhood Profiles") %>% 
-  opendatatoronto::list_package_resources() %>%
-  filter(name == "neighbourhood-profiles-2016-csv") %>%
-  opendatatoronto::get_resource()
+  opendatatoronto::search_packages("Neighbourhood Profiles") %>% #Searched the full dataset from opendatatoronto.
+  opendatatoronto::list_package_resources() %>% #Listed out all the files under "Neighbourhood Profiles" and the file type for each.
+  filter(name == "neighbourhood-profiles-2016-csv") %>% #Filtered this specific dataset from "Neighbourhood Profiles."
+  opendatatoronto::get_resource() #Helps retrieve the dataset and assigns it to the variable "all_neighbourhood_profiles.
   
 
-
+#This code took the previous "all_neighbourhood_profiles," cleaned it, and assigned the clean code back to the same variable.
 all_neighbourhood_profiles <-
-  janitor::clean_names(all_neighbourhood_profiles)
+  janitor::clean_names(all_neighbourhood_profiles) #Removed all spaces, turned spaces into "_" and turned all columns into sentence case.
 
 
-
-clean_all_neighbourhood_profiles <-
-  all_neighbourhood_profiles %>%
-  
-  select(category, 
-         topic, 
-         characteristic, 
-         city_of_toronto)
-
-
-
+#Created a variable called "clean_neighbourhood_profiles" and assigned the "all_neighbourhood_profiles" to it. The difference here is that we want a specific subset of the information that is under "all_neighbourhood_profiles."
 clean_neighbourhood_profiles <- 
   all_neighbourhood_profiles %>%
   
-  filter(category == "Population", 
-         topic == "Age characteristics"
+  #The filter component helps select a specific row attribute based on the specific column name. The function ONLY selects the attribute specified in the code.
+  filter(category == "Population", #For the purpose of the study, we want to only focus on population.
+         topic == "Age characteristics" #For the purpose of the study, we want to only focus on age groups.
          ) %>%
+  
+  #Within the "characteristic" column in the dataset, we want to focus on the below specific row attributes. Wanted to remove the specific age groups based on gender and wanted to use the data specific to the overall age group.
   filter(characteristic %in% c("Children (0-14 years)",
                                "Youth (15-24 years)",
                                "Working Age (25-54 years)",
@@ -54,6 +49,7 @@ clean_neighbourhood_profiles <-
                                "Older Seniors (85+ years)"
                                )
          ) %>%
+  #The select function helps select the specific columns that needs to be used for the new dataset. The "Category" column focuses on the high level category of the dataset, in this case its population. The "topic" column focuses on "age characteristics" specifically and not the other attributes within "population." The characteristic column specifies the age groups. And lastly, "city_of_toronto" column identifies the quantitative data on how many people are in each age group. 
   select(category, 
          topic, 
          characteristic, 
@@ -63,12 +59,11 @@ clean_neighbourhood_profiles <-
 
 ## Abstract
 
-
+This paper researched the number of people living in Toronto that fall under various social markers, such as age, gender, household income, language, etc. It was found that most of Toronto’s population falls under the working age which are people between the ages of 25 – 54 years old. It was also seen that older seniors, who are 85 years and over, make up the lowest population in Toronto. This is of great significance because data such as this can be a key factor in addressing various social issues that befall the Toronto community, such as the development of infrastructure (ex. senior homes, day cares, etc.) based on community needs, populations most vulnerable to diseases such as Covid -19 and any other needs the community may have based on these social characteristics.
 
 ## Introduction
 
-
-
+Toronto consists of a very diverse community with many various social markers at play. Social characteristics such as age, gender, income level, race and many more can play a huge role in the types of social programs that are offered within the city, the type of infrastructure being developed within the city and, especially at a time like this, can help determine populations that may be more or less vulnerable to various health issues such as a pandemic. For example, if children make up a larger population within Toronto, more resources to infrastructure such as schools may be favoured rather than diverting funds to transportation. This information, as mentioned above, is even more consequential during a pandemic as it would assist Health Canada in determining how much of the population is at risk (i.e., elderly), how much of the population may transmit the disease by going to work, school, etc., and how many people are living in each household. Additionally, the data is collected for each neighbourhood in Toronto, making it easy to pinpoint the needs of each community. Neighbourhoods with a higher number of families may need more accessibility to parks, grocery stores, etc., but neighbourhoods with a higher number of youths may become the central hub for restaurants and night life. Addressing specific social markers such as languages spoken, incomes of families and individual’s citizenship status helps provide insight into the plethora of people that make up the city. This paper seeks to determine the census of population across Toronto.The rest of the paper will discuss the census of Toronto in greater detail, where the data further elaborates on the total number of people residing in Toronto based on the age group.
 
 ## Data
 
@@ -76,30 +71,39 @@ The "Neighbourhood Profiles" dataset was retrieved from opendatatoronto. This da
 
 According to Statistics Canada, a sample of approximately 25% of Canadian households receive an online questionnaire and face-to-face discussions. Whereas the rest of the sample receives a short-form questionnaire to purely retrieve the demographic data of the participants (this is 100% of the data). Statistic Canada does a great job in tackling the non-responses from participants, where they conduct a follow-up to complete the questionnaire by phone or either visit door to door.
 
-The table and graph below are based on the 100% of data that got retrieved from the participants - population. 
+The table and graph below are based on the 100% of data that got retrieved from the participants. Table 1 has been filtered down to include only statistics about the City of Toronto and the age groups that reside within the city. In order to display this table in a clear, legible manner, the full datatset "Neighbourhood Profiles" had to be filtered based on "category," which was "Population" and "topic," which was "Age characteristics." This was done so that the data becomes easier to read as the dataset contained much more information than the table displayed below. Table 1 also pinpoints the population based on the different age groups rather than displaying the data by age and gender, which becomes harder to absorb.
 
-Below is a full table (Table 1) for the data retrieved from "Neighbourhood Profiles" that has been filtered down to include only statistics about the City of Toronto and its population. The table details the total number of people in each age group that reside in the city of Toronto.
 
 ```{r table1, echo=FALSE}
+#Creating a table for the "clean_neighbourhood_profiles" filtered dataset.
 knitr::kable(clean_neighbourhood_profiles, 
-             "simple", 
-             col.names = c("Population", "Topic", "Age", "Number of People in Toronto"), 
-             align = c("l","l","l","r"),
-             caption = "Population in Toronto Based on Age",
+             "simple", #"Simple" is the layout of the table in the PDF.
+             col.names = c("Category", "Topic", "Age", "Number of People in Toronto"), #Renamed the columns to the appropriate names from left to right of the dataset.
+             align = c("l","l","l","r"), #Aligning the content of the table. All columns are aligned to the left except for the last column which is aligned to the right.
+             caption = "Population in Toronto Based on Age", #Title of the Table
              )
 ```
 
-```{r graph1, echo=FALSE}
-ggplot(clean_neighbourhood_profiles, aes(x = characteristic, y = city_of_toronto)) + 
-  geom_bar(stat = "identity") +
-  labs(x = "Age Group",
-       y = "Number of People",
-       subtitle = "Graph 1: Population in Toronto Based on Age",
-       caption = "Source: opendatatoronto") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90))
-```
+Based on Table 1, we can identify the core age groups that live in Toronto and its population. Table 1 does a good job organizing it based on the current age group (i.e., youngest age group at the top of the list and the oldest age group at the bottom). On the contrary, the attempt was to visually represent the same data in a graph, where the reader can visually see which age group had the most population in Toronto. In order to identify to which age group the city appeals to, the reader will need to look at the graph more carefully as the data gets displayed in an erroneous manner. 
 
+Graph 1 is organized by age groups (x-axis) and number of people from that age group (y-axis). Unfortunately, the age groups have been organized in a random format, where I could not get the graph to be organized in the correct manner as well as the number of people in the y-axis. The y-axis is organized in the opposite direction (largest number at the bottom and the smallest number at the top). Due to this, the graph is being displayed in an opposite mental-model where the smallest bar indicates the largest population. By looking at the graph, we can identify that the largest age group in terms of population in the city of Toronto is the "Working Age" - consisting of people that are between the age of 25 - 54 years of age. While the smallest group of individuals are the "Older Seniors" - consisting of people above the age of 85. With this data we can say that Toronto appeals to majority of people in the working class, where Toronto's infrastructure focused on funding for transportation, commuting, office buildings, restaurants, and other necessities that may appeal to the "Working Age" population in Toronto. Statistics Canada can now use this data to provide leverage to get the rationale for funding for specific necessities to bring other age groups to Toronto or choose to bring in more people of the "Working Age" population.
+
+
+
+```{r graph1, echo=FALSE}
+#Creating a graph for the "clean_neighbourhood_profiles" filtered dataset.
+ggplot(clean_neighbourhood_profiles, aes(x = characteristic, y = city_of_toronto)) + #Using ggplot to create a graph for the specified dataset and specifying the x and y axis of the graph, where the graph has the age groups on the x axis and the number of people in each age group on the y axis.
+  
+  geom_bar(stat = "identity", fill = "#800080") + #Need to use the parameter (stat = "identity") to let the graph know that there needs to be a y-axis added to the graph. Also, changed the colour of the bars to purple to represent the Raptors (Toronto's NBA team).
+
+  labs(x = "Age Group", #Changing the label of the x-axis.
+       y = "Number of People", #Changing the label of the y-axis.
+       subtitle = "Graph 1: Population in Toronto Based on Age", #Adding a title for the graph.
+       caption = "Source: opendatatoronto") + #Adding a subtitle to the graph on the bottom right of the graph.
+  theme_minimal() + #Code to make the background of the table "minimal" or transparent
+  theme(axis.text.x = element_text(angle = 90)) #Used to change the text in the x-axis to be displayed in a 90 degree angle.
+
+```
 
 ## References
 
