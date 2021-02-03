@@ -3,6 +3,8 @@ title: "Breakdown of Population Based on Age Groups in Toronto"
 author: "Rachit Srivastava"
 date: "January 29th, 2021"
 output: pdf_document
+abstract: "This paper researched the number of people living in Toronto that fall under various social markers, such as age, gender, household income, language, etc. It was found that most of Toronto’s population falls under the working age which are people between the ages of 25 – 54 years old. It was also seen that older seniors, who are 85 years and over, make up the lowest population in Toronto. This is of great significance because data such as this can be a key factor in addressing various social issues that befall the Toronto community, such as the development of infrastructure (ex. senior homes, day cares, etc.) based on community needs, populations most vulnerable to diseases such as Covid -19 and any other needs the community may have based on these social characteristics."
+bibliography: outputs/paper/references.bib
 ---
  
 ```{r clean_data, include=FALSE}
@@ -57,21 +59,19 @@ clean_neighbourhood_profiles <-
 
 ```
 
-## Abstract
-
-This paper researched the number of people living in Toronto that fall under various social markers, such as age, gender, household income, language, etc. It was found that most of Toronto’s population falls under the working age which are people between the ages of 25 – 54 years old. It was also seen that older seniors, who are 85 years and over, make up the lowest population in Toronto. This is of great significance because data such as this can be a key factor in addressing various social issues that befall the Toronto community, such as the development of infrastructure (ex. senior homes, day cares, etc.) based on community needs, populations most vulnerable to diseases such as Covid -19 and any other needs the community may have based on these social characteristics.
-
 ## Introduction
 
 Toronto consists of a very diverse community with many various social markers at play. Social characteristics such as age, gender, income level, race and many more can play a huge role in the types of social programs that are offered within the city, the type of infrastructure being developed within the city and, especially at a time like this, can help determine populations that may be more or less vulnerable to various health issues such as a pandemic. For example, if children make up a larger population within Toronto, more resources to infrastructure such as schools may be favoured rather than diverting funds to transportation. This information, as mentioned above, is even more consequential during a pandemic as it would assist Health Canada in determining how much of the population is at risk (i.e., elderly), how much of the population may transmit the disease by going to work, school, etc., and how many people are living in each household. Additionally, the data is collected for each neighbourhood in Toronto, making it easy to pinpoint the needs of each community. Neighbourhoods with a higher number of families may need more accessibility to parks, grocery stores, etc., but neighbourhoods with a higher number of youths may become the central hub for restaurants and night life. Addressing specific social markers such as languages spoken, incomes of families and individual’s citizenship status helps provide insight into the plethora of people that make up the city. This paper seeks to determine the census of population across Toronto.The rest of the paper will discuss the census of Toronto in greater detail, where the data further elaborates on the total number of people residing in Toronto based on the age group.
 
 ## Data
 
-The "Neighbourhood Profiles" dataset was retrieved from opendatatoronto. This dataset entails the census of the population across Toronto and its different neighbourhoods. This census of Toronto's population occurs every 5 years by Statistics Canada, where they collect various data about the population; such as: age, sex, language, households, income, etc. The data was collected for the City of Toronto's 140 neighbourhoods in 2016. The full datatset is collected based on Statistic Canada's random rounding reporting practices where they provide numbers of each data by observing, surveying, and estimating. 
+The "Neighbourhood Profiles" dataset was retrieved from opendatatoronto [@NeighbourhoodProfiles]. This dataset entails the census of the population across Toronto and its different neighbourhoods. This census of Toronto's population occurs every 5 years by Statistics Canada, where they collect various data about the population; such as: age, sex, language, households, income, etc. The data was collected for the City of Toronto's 140 neighbourhoods in 2016 [@NeighbourhoodProfiles]. The full datatset is collected based on Statistic Canada's random rounding reporting practices where they provide numbers of each data by observing, surveying, and estimating. 
 
-According to Statistics Canada, a sample of approximately 25% of Canadian households receive an online questionnaire and face-to-face discussions. Whereas the rest of the sample receives a short-form questionnaire to purely retrieve the demographic data of the participants (this is 100% of the data). Statistic Canada does a great job in tackling the non-responses from participants, where they conduct a follow-up to complete the questionnaire by phone or either visit door to door.
+According to Statistics Canada, a sample of approximately 25% of Canadian households receive an online questionnaire and face-to-face discussions [@governmentofcanada2020]. Whereas the rest of the sample receives a short-form questionnaire to purely retrieve the demographic data of the participants, this is 100% of the data [@governmentofcanada2020]. Statistic Canada does a great job in tackling the non-responses from participants, where they conduct a follow-up to complete the questionnaire by phone or either visit door to door [@governmentofcanada2020].
 
 The table and graph below are based on the 100% of data that got retrieved from the participants. Table 1 has been filtered down to include only statistics about the City of Toronto and the age groups that reside within the city. In order to display this table in a clear, legible manner, the full datatset "Neighbourhood Profiles" had to be filtered based on "category," which was "Population" and "topic," which was "Age characteristics." This was done so that the data becomes easier to read as the dataset contained much more information than the table displayed below. Table 1 also pinpoints the population based on the different age groups rather than displaying the data by age and gender, which becomes harder to absorb.
+
+
 
 
 ```{r table1, echo=FALSE}
@@ -83,6 +83,9 @@ knitr::kable(clean_neighbourhood_profiles,
              caption = "Population in Toronto Based on Age", #Title of the Table
              )
 ```
+
+
+
 
 Based on Table 1, we can identify the core age groups that live in Toronto and its population. Table 1 does a good job organizing it based on the current age group (i.e., youngest age group at the top of the list and the oldest age group at the bottom). On the contrary, the attempt was to visually represent the same data in a graph, where the reader can visually see which age group had the most population in Toronto. In order to identify to which age group the city appeals to, the reader will need to look at the graph more carefully as the data gets displayed in an erroneous manner. 
 
@@ -105,9 +108,15 @@ ggplot(clean_neighbourhood_profiles, aes(x = characteristic, y = city_of_toronto
 
 ```
 
+
+## Footnote
+
+We analyzed the data using the language `R` [@citeR] by using `rStudio` [@citeLahman], where we installed packages to help assist our code such as: `tidyverse` [@citetidy], `dplyr` [@citedplyr], and `janitor` [@citejanitor]. Also, all of our graphs were plotted in the paper using `ggplot` [@citeggplot2].
+
+To see the full GitHub repository, please visit the link: https://github.com/levi24/Toronto_Population_2016.git
+
+
+
+
+
 ## References
-
-
-Dataset: https://open.toronto.ca/dataset/neighbourhood-profiles/
-How they find the data: https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&SDDS=3901
-
