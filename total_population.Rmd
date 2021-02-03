@@ -113,10 +113,7 @@ ggplot(clean_neighbourhood_profiles, aes(x = characteristic, y = city_of_toronto
 
 We analyzed the data using the language `R` [@citeR] by using `rStudio` [@citeLahman], where we installed packages to help assist our code such as: `tidyverse` [@citetidy], `dplyr` [@citedplyr], and `janitor` [@citejanitor]. Also, all of our graphs were plotted in the paper using `ggplot` [@citeggplot2].
 
-To see the full GitHub repository, please visit the link: https://github.com/levi24/Toronto_Population_2016.git
-
-
-
-
+`To see the full GitHub repository, please visit the link:` 
+https://github.com/levi24/Toronto_Population_2016.git
 
 ## References
